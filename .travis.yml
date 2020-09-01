@@ -1,31 +1,27 @@
 language: android
-
 android:
   components:
-    - tools
-    - platform-tools
-    - build-tools-28.0.3
-    - android-28
-    - extra-android-m2repository
+  - tools
+  - platform-tools
+  - build-tools-28.0.3
+  - android-28
+  - extra-android-m2repository
   licenses:
-    - 'android-sdk-license-.+'
-
+  - android-sdk-license-.+
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 after_success:
-  - .buildscript/deploy_snapshot.sh
-
+- ".buildscript/deploy_snapshot.sh"
 branches:
   except:
-    - gh-pages
-
+  - gh-pages
 notifications:
   email: false
-
 sudo: false
-
 cache:
   directories:
-    - $HOME/.gradle
-
+  - "$HOME/.gradle"
+env:
+  global:
+  - secure: S4GjvzyYNKm/ND7ENSHYRUi+aXWD9hSJpQllzjVpX8IjNY2iDA+AQZAME+xFv/N/B9fnWGh7WgqOQmpNreM4kC+sOgAVTIJNRFfdxnZ7M2IymeiC+z4WBz37U55yvPPNM6B2RJowm8fSVlisbbZM2pxy2mnzeZVk66BOwmAyM2g0yZsreiiSQPrhWzwDFKlRDY9HrhfjRg6onWpho9DW413Z0KpeXTGQGW1YsX9B3FgTA43CfgHlmOv/lAqBr5x2ONYVtPP9Mw1ppe5K5GxemfT6Q9lj89AyzStzGKNsejlaiyCQ9o0UClTce8de7Lsj020vwNNnnKcDqajitO6DZuFGgSoqbwaTyLLLL7AXtBlMvvgocNy+T0+b3Qhvw4QN/5QZA4u91hnjbWMfUJ3fls17jS/KdGa8OFKLgbJqh+GM80vKDODetHZIQvq6NPqJnlNc008gVGgKCAnt9M3kdj/gbUZp5wIdpyXHI0Hs8fv65nk7oZm53tdEzk/vdsFFmH6tUXH19SNjyG7nzNciGD3cx/86vEIV7TVbIe4PezMJFP+u2jWupQpFi4wesFM4EHprglLME1ALXY3orLtZyyp2FT+od4PuIDnnTVGvdMonqOrNxjO8dEp+6vBTJ0kDxMTFzl7G4VR9RNeyxFB1IVz6lXY0ixi7ojg1afJ1m/0=
+  - secure: IkxdI30KEEFu04SnhiPgfuPTS6EtDrOB1SPAVeNV/rQRg2Y+Tx+dPIWZfuxI9jcDMxJz+b4e1qVNjEgsZVQzAke2BE/qa/rvSBn9Lpk5pInZeaL/YgvD/x7UBEuZ0bYTR9Mti3x04TGnU6bzl8wDlwffmk0pweaUighvPu1eyuQIDbB3FrghM6dYf5RbKqHa1x9Mjkxeo7x+9m6Wj4rsfMn3zG4EUOQsx/sN4pkuxPnH40ADkrZ0ArkPY6nZ7Y+i9qUUIUj8rt2DippcgfYp9Rf1cgeh6A9oaIwz86WPt25RwWjdtt2pXqBzDlZwnl49DH9/NE9UJ5cuqSxApB742g9IvYUQbwlO8yDi2/J54XfgPplubcJyaubbKjqUCRjJbFknNgqlzLc+dvhJuyFoERZvkm09YGcRKNsSI4P37xJTLMDkOfG84vW64UlI2lNCi+y5wf6udVIZhy9BvGzlBTKTZ7QN681K3Ef8o05fQRcGqUgYiBisiSXeQdfyYjLBjYIes2LtcEhMmyXqbFtZFqKuWsRUvPJP/lfl71tBZ/7EQ5B+aQqynYAhgIx7+HBIidsd1bKaStuqI0w8JNb2uY9JVA0QlaZRN1itXrtfzL1b5fUi8Rbr3dlASnJDOq/musaNC61INFB2h+0RdzL8fzN2h498vmhHszsV4uXVE2w=
