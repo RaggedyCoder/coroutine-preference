@@ -2,6 +2,7 @@ language: android
 
 before_install:
   - chmod +x gradlew
+  - chmod +x deploy_snapshot.sh
 
 android:
   components:
