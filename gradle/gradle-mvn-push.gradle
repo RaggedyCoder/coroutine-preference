@@ -83,16 +83,8 @@ afterEvaluate { project ->
     }
 
     task androidJavadocs(type: Javadoc) {
-        source = android.sourceSets.main.java.srcDirs
+        source = android.sourceSets.main.java.source
         classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-
-        if (JavaVersion.current().isJava8Compatible()) {
-            allprojects {
-                tasks.withType(Javadoc) {
-                    options.addStringOption('Xdoclint:none', '-quiet')
-                }
-            }
-        }
     }
 
     task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
@@ -102,7 +94,7 @@ afterEvaluate { project ->
 
     task androidSourcesJar(type: Jar) {
         classifier = 'sources'
-        from android.sourceSets.main.java.sourceFiles
+        from android.sourceSets.main.java.source
     }
 
     if (JavaVersion.current().isJava8Compatible()) {

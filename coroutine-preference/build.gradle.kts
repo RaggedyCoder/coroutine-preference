@@ -39,4 +39,12 @@ dependencies {
     testImplementation(TestLibraries.coroutinesTest)
 }
 
+tasks {
+    withType(Javadoc::class.java) {
+        enabled = false
+        source = android.sourceSets.getByName("main").java.sourceFiles
+        classpath += project.files(android.bootClasspath.joinToString(File.pathSeparator))
+    }
+}
+
 apply(rootProject.file("gradle/gradle-mvn-push.gradle"))
