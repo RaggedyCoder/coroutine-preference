@@ -26,6 +26,12 @@ allprojects {
         google()
         maven { url = uri("https://jitpack.io") }
     }
+
+    val GROUP: String by project
+    val VERSION_NAME: String by project
+
+    group = GROUP
+    version = VERSION_NAME
 }
 
 tasks.register("clean", Delete::class.java) {
