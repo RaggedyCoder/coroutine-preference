@@ -2,8 +2,8 @@ object Versions {
     val kotlin = "1.4.0"
     val coroutines = "1.3.9"
     val minSdk = 21
-    val targetSdk = 28
-    val compileSdk = 28
+    val targetSdk = 29
+    val compileSdk = 29
 
     val gson = "2.8.0"
 

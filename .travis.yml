@@ -1,29 +1,39 @@
 language: android
+
 before_install:
   - chmod +x gradlew
+
 android:
   components:
-  - tools
-  - platform-tools
-  - build-tools-28.0.3
-  - android-28
-  - extra-android-m2repository
+    - tools
+    - platform-tools
+    - build-tools-29.0.2
+    - android-29
+    - extra-android-m2repository
   licenses:
-  - android-sdk-license-.+
+    - 'android-sdk-license-.+'
+
 jdk:
-- oraclejdk8
+  - oraclejdk8
+
 after_success:
-- ".buildscript/deploy_snapshot.sh"
+  - .buildscript/deploy_snapshot.sh
+
 branches:
   except:
-  - gh-pages
+    - gh-pages
+
 notifications:
   email: false
+
 sudo: false
+
 cache:
   directories:
-  - "$HOME/.gradle"
+    - $HOME/.gradle
+
 env:
   global:
-  - secure: S4GjvzyYNKm/ND7ENSHYRUi+aXWD9hSJpQllzjVpX8IjNY2iDA+AQZAME+xFv/N/B9fnWGh7WgqOQmpNreM4kC+sOgAVTIJNRFfdxnZ7M2IymeiC+z4WBz37U55yvPPNM6B2RJowm8fSVlisbbZM2pxy2mnzeZVk66BOwmAyM2g0yZsreiiSQPrhWzwDFKlRDY9HrhfjRg6onWpho9DW413Z0KpeXTGQGW1YsX9B3FgTA43CfgHlmOv/lAqBr5x2ONYVtPP9Mw1ppe5K5GxemfT6Q9lj89AyzStzGKNsejlaiyCQ9o0UClTce8de7Lsj020vwNNnnKcDqajitO6DZuFGgSoqbwaTyLLLL7AXtBlMvvgocNy+T0+b3Qhvw4QN/5QZA4u91hnjbWMfUJ3fls17jS/KdGa8OFKLgbJqh+GM80vKDODetHZIQvq6NPqJnlNc008gVGgKCAnt9M3kdj/gbUZp5wIdpyXHI0Hs8fv65nk7oZm53tdEzk/vdsFFmH6tUXH19SNjyG7nzNciGD3cx/86vEIV7TVbIe4PezMJFP+u2jWupQpFi4wesFM4EHprglLME1ALXY3orLtZyyp2FT+od4PuIDnnTVGvdMonqOrNxjO8dEp+6vBTJ0kDxMTFzl7G4VR9RNeyxFB1IVz6lXY0ixi7ojg1afJ1m/0=
-  - secure: IkxdI30KEEFu04SnhiPgfuPTS6EtDrOB1SPAVeNV/rQRg2Y+Tx+dPIWZfuxI9jcDMxJz+b4e1qVNjEgsZVQzAke2BE/qa/rvSBn9Lpk5pInZeaL/YgvD/x7UBEuZ0bYTR9Mti3x04TGnU6bzl8wDlwffmk0pweaUighvPu1eyuQIDbB3FrghM6dYf5RbKqHa1x9Mjkxeo7x+9m6Wj4rsfMn3zG4EUOQsx/sN4pkuxPnH40ADkrZ0ArkPY6nZ7Y+i9qUUIUj8rt2DippcgfYp9Rf1cgeh6A9oaIwz86WPt25RwWjdtt2pXqBzDlZwnl49DH9/NE9UJ5cuqSxApB742g9IvYUQbwlO8yDi2/J54XfgPplubcJyaubbKjqUCRjJbFknNgqlzLc+dvhJuyFoERZvkm09YGcRKNsSI4P37xJTLMDkOfG84vW64UlI2lNCi+y5wf6udVIZhy9BvGzlBTKTZ7QN681K3Ef8o05fQRcGqUgYiBisiSXeQdfyYjLBjYIes2LtcEhMmyXqbFtZFqKuWsRUvPJP/lfl71tBZ/7EQ5B+aQqynYAhgIx7+HBIidsd1bKaStuqI0w8JNb2uY9JVA0QlaZRN1itXrtfzL1b5fUi8Rbr3dlASnJDOq/musaNC61INFB2h+0RdzL8fzN2h498vmhHszsV4uXVE2w=
+    - secure: pEYwCsRKrAnj3jjzJij4Bwk+xndCRpshHNSlTM39j1lFLyo3WvMrewPEXMVqSvJZjVyktIPBJ9NNb96Tpy0dfNTFbfAp4Wjf1kOdxOWcDYlWLIrS/eSMAq7wXus02BJq7QC8qsHQJmhZ7Sj6b2HZYqoa9SBBbLOBew9XBznRx3/FxsSq9wG5j6lekkmuJjzlYnKA5cl4Fe9c884W2ug5tris6WHHBbgO16kj4RVrqtg9B80D3yyJnj4cBug8wp2EGEX3U1TOzvp+xvgHWztdOFQ3b7M1Q/sCrjAlGhH0cA+CLKqLbLJUWLtPz1qU2nSSYPtD2gaPO6Yg1M9q5JNGMxqh8tr5U292CY5HQgLOkb8ItJC9AcZ0ltOyffeuRLNo3aeq+l9MqD60gTboeP3C2WQRE7HIRm8Q289TtsqxQadrgjcg9T/6GHM9RusgTMyDuKPqOQhmp9KURGe92RzvysSd4CME7SoZnPAP7M/O877UOYFAED7EBMMhtMLHwopQjAagrfKxQoNs4qTW56ZjNUY7mwfVLZxfM5nuOX+cjdctEyFH73IZLb6a1cRtRajTFoLNHFamOvfUnGYRS3A/akTQNki7fBTuxkC5U9VPEurkFrrv2fU2ziOjboOkkRD+/e6BHhrhBeBTBvqhU3n4KzUITeJHHve9Xz57vgJ+T+I=
+    - secure: CcaUbnEwJeTZNdP6PSDjnFH7ZszPxGgRphcCt7caZK0bJxOil+KqddMMQAW94UaKOLbd6jP/NBkASgvf8KokluQVGSXG/EEtRGf1d4tIDcv71/MNPDQwMTyTdCOvIm35oaCEz7/R2wpXzvbbOjyw5Xi/j6FSQ8CS0JNiMbrC5VgxaEhkKMXroV0eLK2TwW90PjORpCkkoCBcmhfyYMDHnNfr/lePD8PFxwSvmRz9dPTBKj839yunkInstAmO9AgT38KfJQG9yBWaq+jg0KvQJpGCAeDCPplue+9axYzsSgkPliQh9gnRCDUA7+F150uasuJwjiTBMVCYaEnK9lL+TawX2Rswx6KFJr/krBN/9B3yajmL1YlkkJonFJ6IpAqrfGGJNdbnWNRWtLrn86pMjJC69kPDvJOn9Yy7l7+3qa/cAaNGOfoBrVU+iZj9AeTcAX3ZlWV219xaj6RE3SFUDALvr+MvHnonvkwGbP4+Kwe4ioLaG7L/ZYIrLK7x6K0KFszbPoERUdJqRYzNfzi2/AueIdwJx9m2oGn/dRoQrBzsSRo98fx7UGziOkyXsUkx9WqcNlw7VLNW7DqIV921Dip7jeAt5kMmjDZ/KNP9ewOJI1Fw7mqfsspsFpY+V5h5x+4CnlHvHsFSyZZEQwjmIXbC1pUgcAz+M8OYPIsEfMI=
+
