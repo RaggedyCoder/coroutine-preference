@@ -38,3 +38,7 @@ dependencies {
     testImplementation(TestLibraries.mockitoKotlin)
     testImplementation(TestLibraries.coroutinesTest)
 }
+
+apply {
+    rootProject.file("gradle/gradle-mvn-push.gradle")
+}

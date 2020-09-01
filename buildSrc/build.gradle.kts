@@ -39,7 +39,3 @@ gradlePlugin {
         implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }
 }
-
-apply {
-    rootProject.file("gradle/gradle-mvn-push.gradle")
-}
