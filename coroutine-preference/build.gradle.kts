@@ -39,4 +39,4 @@ dependencies {
     testImplementation(TestLibraries.coroutinesTest)
 }
 
-rootProject.file("gradle/gradle-mvn-push.gradle")
+apply(rootProject.file("gradle/gradle-mvn-push.gradle"))
