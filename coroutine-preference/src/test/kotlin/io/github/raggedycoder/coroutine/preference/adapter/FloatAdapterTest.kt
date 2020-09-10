@@ -7,7 +7,9 @@ import io.github.raggedycoder.coroutine.preference.DefaultValues
 import io.github.raggedycoder.coroutine.preference.assertEquals
 import io.github.raggedycoder.coroutine.preference.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 @ExperimentalCoroutinesApi
 class FloatAdapterTest {
@@ -18,9 +20,10 @@ class FloatAdapterTest {
 
     private val testKey = "float_key"
 
-    @Test
-    fun testGet() {
-        val expectedResult = 10.01f
+    @ParameterizedTest(name = "Testing for value {0}")
+    @ValueSource(floats = [Float.MIN_VALUE, -10.01f, 10.01f, Float.MAX_VALUE])
+    @DisplayName("Test Get Function")
+    fun testGet(expectedResult: Float) {
         whenever(preferences.getFloat(testKey, DefaultValues.DEFAULT_FLOAT))
             .thenReturn(expectedResult)
 
@@ -30,9 +33,10 @@ class FloatAdapterTest {
         preferences verify { getFloat(testKey, DefaultValues.DEFAULT_FLOAT) }
     }
 
-    @Test
-    fun testSet() {
-        val value = 10.01f
+    @ParameterizedTest(name = "Testing for value {0}")
+    @ValueSource(floats = [Float.MIN_VALUE, -10.01f, 10.01f, Float.MAX_VALUE])
+    @DisplayName("Test Set Function")
+    fun testSet(value: Float) {
         whenever(editor.putFloat(testKey, value)).thenReturn(editor)
 
         adapter.set(testKey, value, editor)

@@ -7,7 +7,9 @@ import io.github.raggedycoder.coroutine.preference.DefaultValues
 import io.github.raggedycoder.coroutine.preference.assertEquals
 import io.github.raggedycoder.coroutine.preference.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 @ExperimentalCoroutinesApi
 class BooleanAdapterTest {
@@ -18,9 +20,10 @@ class BooleanAdapterTest {
 
     private val testKey = "boolean_key"
 
-    @Test
-    fun testGet() {
-        val expectedResult = true
+    @ParameterizedTest
+    @ValueSource(booleans = [true, false])
+    @DisplayName("Test Get Function")
+    fun testGet(expectedResult: Boolean) {
         whenever(preferences.getBoolean(testKey, DefaultValues.DEFAULT_BOOLEAN))
             .thenReturn(expectedResult)
 
@@ -30,9 +33,10 @@ class BooleanAdapterTest {
         preferences verify { getBoolean(testKey, DefaultValues.DEFAULT_BOOLEAN) }
     }
 
-    @Test
-    fun testSet() {
-        val value = true
+    @ParameterizedTest
+    @ValueSource(booleans = [true, false])
+    @DisplayName("Test Set Function")
+    fun testSet(value: Boolean) {
         whenever(editor.putBoolean(testKey, value)).thenReturn(editor)
 
         adapter.set(testKey, value, editor)

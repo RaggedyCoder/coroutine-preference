@@ -24,6 +24,9 @@ object Libraries {
 
 object TestLibraries {
     val junit5 = "org.junit.jupiter:junit-jupiter-api:${Versions.junit5}"
+    val junit5Engine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit5}"
+    val junit5VintageEngine = "org.junit.jupiter:junit-vintage-engine:${Versions.junit5}"
+    val junit5Params = "org.junit.jupiter:junit-jupiter-params:${Versions.junit5}"
 
     val mockitoCore = "org.mockito:mockito-core:${Versions.mockito}"
     val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlin}"

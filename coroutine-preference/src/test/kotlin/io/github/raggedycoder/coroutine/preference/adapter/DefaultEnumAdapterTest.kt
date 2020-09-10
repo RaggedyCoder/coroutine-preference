@@ -8,6 +8,8 @@ import io.github.raggedycoder.coroutine.preference.assertEquals
 import io.github.raggedycoder.coroutine.preference.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
 
 @ExperimentalCoroutinesApi
 class DefaultEnumAdapterTest {
@@ -29,9 +31,9 @@ class DefaultEnumAdapterTest {
         expectedResult assertEquals actualResult
     }
 
-    @Test
-    fun testGetForNonDefaultValue() {
-        val expectedResult = TestEnum.BAR
+    @ParameterizedTest
+    @EnumSource(value = TestEnum::class, names = ["FOO", "BAR"])
+    fun testGetForNonDefaultValue(expectedResult: TestEnum) {
         whenever(preferences.getString(testKey, null)).thenReturn(expectedResult.name)
 
         val actualResult = adapter.get(testKey, preferences)
@@ -39,9 +41,9 @@ class DefaultEnumAdapterTest {
         expectedResult assertEquals actualResult
     }
 
-    @Test
-    fun testSet() {
-        val value = TestEnum.BAR
+    @ParameterizedTest
+    @EnumSource(value = TestEnum::class, names = ["FOO", "BAR"])
+    fun testSet(value:TestEnum) {
         whenever(editor.putString(testKey, value.name)).thenReturn(editor)
 
         adapter.set(testKey, value, editor)

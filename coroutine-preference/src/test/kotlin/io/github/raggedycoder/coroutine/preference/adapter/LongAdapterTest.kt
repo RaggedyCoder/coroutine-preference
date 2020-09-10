@@ -7,7 +7,9 @@ import io.github.raggedycoder.coroutine.preference.DefaultValues
 import io.github.raggedycoder.coroutine.preference.assertEquals
 import io.github.raggedycoder.coroutine.preference.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 @ExperimentalCoroutinesApi
 class LongAdapterTest {
@@ -18,9 +20,10 @@ class LongAdapterTest {
 
     private val testKey = "long_key"
 
-    @Test
-    fun testGet() {
-        val expectedResult = 1001L
+    @ParameterizedTest(name = "Testing for value {0}")
+    @ValueSource(longs = [Long.MIN_VALUE, 1001, 1001, Long.MAX_VALUE])
+    @DisplayName("Test Get Function")
+    fun testGet(expectedResult: Long) {
         whenever(preferences.getLong(testKey, DefaultValues.DEFAULT_LONG))
             .thenReturn(expectedResult)
 
@@ -30,9 +33,10 @@ class LongAdapterTest {
         preferences verify { getLong(testKey, DefaultValues.DEFAULT_LONG) }
     }
 
-    @Test
-    fun testSet() {
-        val value = 1001L
+    @ParameterizedTest(name = "Testing for value {0}")
+    @ValueSource(longs = [Long.MIN_VALUE, 1001, 1001, Long.MAX_VALUE])
+    @DisplayName("Test Set Function")
+    fun testSet(value: Long) {
         whenever(editor.putLong(testKey, value)).thenReturn(editor)
 
         adapter.set(testKey, value, editor)

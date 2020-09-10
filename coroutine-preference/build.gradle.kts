@@ -17,6 +17,16 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    testBuildType = "debug"
+
+    buildTypes {
+        getByName("debug") {
+            isMinifyEnabled = false
+            isDebuggable = true
+            isTestCoverageEnabled = true
+        }
+    }
+
     sourceSets {
         getByName("main") {
             java.srcDir("src/main/kotlin")
@@ -27,6 +37,32 @@ android {
         }
     }
 }
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
+afterEvaluate {
+    tasks.withType<Test> {
+        testLogging {
+            events("skipped", "failed")
+        }
+    }
+    val testKey = "coroutinePreferenceTests"
+    val task = rootProject.tasks.create(testKey, TestReport::class)
+    task.configure(closureOf<TestReport> {
+        group = "Verification"
+        description = "All Unit Tests"
+
+        val tasks = project.tasks
+        val testTask = tasks.find { it.name == "testDebugUnitTest" }
+
+        testTask?.let {
+            reportOn(testTask)
+        }
+
+        destinationDir = file("${rootProject.buildDir}/reports/tests")
+    })
+}
 
 dependencies {
     implementation(Libraries.kotlinStdLib)
@@ -34,6 +70,9 @@ dependencies {
     implementation(Libraries.gson)
 
     testImplementation(TestLibraries.junit5)
+    testRuntimeOnly(TestLibraries.junit5Engine)
+    testRuntimeOnly(TestLibraries.junit5VintageEngine)
+    testImplementation(TestLibraries.junit5Params)
     testImplementation(TestLibraries.mockitoCore)
     testImplementation(TestLibraries.mockitoKotlin)
     testImplementation(TestLibraries.coroutinesTest)
