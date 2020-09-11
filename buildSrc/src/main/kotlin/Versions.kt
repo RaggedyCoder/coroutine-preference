@@ -5,6 +5,10 @@ object Versions {
     val targetSdk = 29
     val compileSdk = 29
 
+    val appCompat = "1.2.0"
+    val androidXAnnotation = "1.1.0"
+    val materialDesign = "1.2.1"
+
     val gson = "2.8.0"
 
     // Test library versions
@@ -18,8 +22,14 @@ object Versions {
 
 
 object Libraries {
+    val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
+    val materialDesign = "com.google.android.material:material:${Versions.materialDesign}"
+    val androidAnnotations = "androidx.annotation:annotation:${Versions.androidXAnnotation}"
+
     val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
     val kotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    val kotlinCoroutinesAndroid =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
     val gson = "com.google.code.gson:gson:${Versions.gson}"
 

@@ -3,5 +3,6 @@ plugins {
 }
 
 include(":coroutine-preference")
+include(":sample")
 
 rootProject.name = "coroutine-preference-root"
