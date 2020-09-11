@@ -39,5 +39,5 @@ License
     limitations under the License.
 
 
- [1]: https://repo1.maven.org/maven2/io/github/raggedycoder/preference/preference-coroutine/0.1.0/preference-coroutine-1.1.0.aar
+ [1]: https://repo1.maven.org/maven2/io/github/raggedycoder/preference/preference-coroutine/0.1.0/preference-coroutine-0.1.0.aar
  [snap]: https://oss.sonatype.org/content/repositories/snapshots/
