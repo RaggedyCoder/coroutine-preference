@@ -9,13 +9,17 @@ interface Preference<T> {
         fun set(key: String, value: T, editor: SharedPreferences.Editor)
     }
 
-    fun get(): T
+    val key: String
 
-    fun getAsFlow(): Flow<T>
+    val defaultValue: T
+
+    val value: T
+
+    val valueAsFlow: Flow<T>
+
+    val available: Boolean
 
     fun set(value: T?)
-
-    fun isSet(): Boolean
 
     fun delete()
 }

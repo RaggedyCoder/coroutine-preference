@@ -9,29 +9,28 @@ import kotlinx.coroutines.flow.*
 class DefaultPreference<T>
 internal constructor(
     private val preferences: SharedPreferences,
-    private val key: String,
-    private val defaultValue: T,
+    override val key: String,
+    override val defaultValue: T,
     private val adapter: Adapter<T>,
     keyChanges: Flow<String>
 ) : Preference<T> {
 
-    private val valueChanges =
-        keyChanges.filter { it == key }.onStart { emit("<init>") }.conflate().map { get() }
+    override val value: T
+        get() = if (preferences.contains(key)) adapter.get(key, preferences) else defaultValue
 
-    override fun get(): T =
-        if (preferences.contains(key)) adapter.get(key, preferences) else defaultValue
+    override val valueAsFlow =
+        keyChanges.filter { it == key }.onStart { emit("<init>") }.conflate().map { value }
 
-    override fun getAsFlow() = valueChanges
+    override val available: Boolean
+        get() = preferences.contains(key)
 
     override fun set(value: T?) {
-        val editor = preferences.edit()
-        editor.apply {
+        preferences.edit().apply {
             if (value != null) adapter.set(key, value, this) else remove(key)
+            apply()
         }
-        editor.apply()
+        preferences.contains(key)
     }
-
-    override fun isSet() = preferences.contains(key)
 
     override fun delete() = set(null)
 }

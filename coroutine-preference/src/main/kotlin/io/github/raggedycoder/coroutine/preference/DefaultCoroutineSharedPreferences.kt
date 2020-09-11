@@ -3,6 +3,7 @@ package io.github.raggedycoder.coroutine.preference
 import android.content.SharedPreferences
 import io.github.raggedycoder.coroutine.preference.Preference.Adapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import java.lang.reflect.Type
 
@@ -15,7 +16,7 @@ internal constructor(
         val changeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key: String ->
             offer(key)
         }
-        invokeOnClose {
+        awaitClose {
             sharedPreferences.unregisterOnSharedPreferenceChangeListener(changeListener)
         }
         sharedPreferences.registerOnSharedPreferenceChangeListener(changeListener)

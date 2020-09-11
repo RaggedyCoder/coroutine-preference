@@ -25,12 +25,17 @@ class DefaultPreferenceTest {
     )
 
     @Test
+    fun testKey() {
+        key assertEquals defaultPreference.key
+    }
+
+    @Test
     fun testGetWhenPreferenceHasKey() {
         val expectedResult = "result"
         whenever(preferences.contains(key)).thenReturn(true)
         whenever(adapter.get(key, preferences)).thenReturn(expectedResult)
 
-        val actualResult = defaultPreference.get()
+        val actualResult = defaultPreference.value
         expectedResult assertEquals actualResult
         preferences verify { contains(key) }
         adapter verify { get(key, preferences) }
@@ -40,7 +45,7 @@ class DefaultPreferenceTest {
     fun testGetWhenPreferenceDoesNotHasKey() {
         whenever(preferences.contains(key)).thenReturn(false)
 
-        val actualResult = defaultPreference.get()
+        val actualResult = defaultPreference.value
         defaultValue assertEquals actualResult
         preferences verify { contains(key) }
         adapter never { get(key, preferences) }
@@ -51,7 +56,7 @@ class DefaultPreferenceTest {
         val expectedResult = true
         whenever(preferences.contains(key)).thenReturn(expectedResult)
 
-        val actualResult = defaultPreference.isSet()
+        val actualResult = defaultPreference.available
         expectedResult assertEquals actualResult
         preferences verify { contains(key) }
     }

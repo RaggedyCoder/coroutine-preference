@@ -8,9 +8,12 @@ object Versions {
     val gson = "2.8.0"
 
     // Test library versions
+    val androidXTest = "1.3.0"
+    val junit4 = "4.13"
     val junit5 = "5.6.2"
     val mockito = "3.5.7"
     val mockitoKotlin = "2.2.0"
+    val roboelectric = "4.4"
 }
 
 
@@ -23,6 +26,8 @@ object Libraries {
 }
 
 object TestLibraries {
+    val testCore = "androidx.test:core:${Versions.androidXTest}"
+    val junit4 = "junit:junit:${Versions.junit4}"
     val junit5 = "org.junit.jupiter:junit-jupiter-api:${Versions.junit5}"
     val junit5Engine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit5}"
     val junit5VintageEngine = "org.junit.vintage:junit-vintage-engine:${Versions.junit5}"
@@ -32,4 +37,7 @@ object TestLibraries {
     val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlin}"
 
     val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
+
+    val roboelectric = "org.robolectric:robolectric:${Versions.roboelectric}"
+    val roboelectricJUnit = "org.robolectric:junit:${Versions.roboelectric}"
 }

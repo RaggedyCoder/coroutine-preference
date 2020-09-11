@@ -69,6 +69,8 @@ dependencies {
     implementation(Libraries.kotlinCoroutines)
     implementation(Libraries.gson)
 
+    testImplementation(TestLibraries.testCore)
+    testImplementation(TestLibraries.junit4)
     testImplementation(TestLibraries.junit5)
     testRuntimeOnly(TestLibraries.junit5Engine)
     testRuntimeOnly(TestLibraries.junit5VintageEngine)
@@ -76,6 +78,8 @@ dependencies {
     testImplementation(TestLibraries.mockitoCore)
     testImplementation(TestLibraries.mockitoKotlin)
     testImplementation(TestLibraries.coroutinesTest)
+    testImplementation(TestLibraries.roboelectric)
+    testImplementation(TestLibraries.roboelectricJUnit)
 }
 
 tasks {
