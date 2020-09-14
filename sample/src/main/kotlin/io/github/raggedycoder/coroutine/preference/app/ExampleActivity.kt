@@ -3,13 +3,15 @@ package io.github.raggedycoder.coroutine.preference.app
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.CheckBox
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import io.github.raggedycoder.coroutine.preference.CoroutineSharedPreferences
 import kotlinx.android.synthetic.main.activity_example.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.*
 
 class ExampleActivity : AppCompatActivity() {
 
@@ -26,94 +28,89 @@ class ExampleActivity : AppCompatActivity() {
         coroutinePreferences.getBoolean("foobar_checkbox_1")
     }
 
-    private val booleanPreferenceTwo by lazy {
-        coroutinePreferences.getBoolean("foobar_checkbox_2")
-    }
-
     private val stringPreferenceOne by lazy {
         coroutinePreferences.getString("foobar_edittext_1")
     }
 
-    private val stringPreferenceTwo by lazy {
-        coroutinePreferences.getString("foobar_edittext_2")
-    }
+    private val jobs = mutableListOf<Job>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_example)
 
-        fooCheckBoxOne.setOnCheckedChangeListener { buttonView, isChecked ->
-            booleanPreferenceTwo.set(isChecked)
-        }
+        fooCheckBoxOne.isChecked = booleanPreferenceOne.value
+        fooCheckBoxTwo.isChecked = booleanPreferenceOne.value
 
-        fooCheckBoxTwo.setOnCheckedChangeListener { buttonView, isChecked ->
+        fooCheckBoxOne.setOnCheckedChangeListener { _, isChecked ->
             booleanPreferenceOne.set(isChecked)
         }
 
-        barEditTextOne.addTextChangedListener(barEditTextOneTextChangeListener)
+        fooCheckBoxTwo.setOnCheckedChangeListener { _, isChecked ->
+            booleanPreferenceOne.set(isChecked)
+        }
 
-        barEditTextTwo.addTextChangedListener(barEditTextTwoTextChangeListener)
+        barEditTextOne.setText(stringPreferenceOne.value)
+        barEditTextTwo.setText(stringPreferenceOne.value)
 
-        booleanPreferenceTwo.valueAsFlow.onEach {
-            runOnUiThread {
-                fooCheckBoxTwo.isChecked = it
+        barEditTextOne.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
             }
-        }.launchIn(CoroutineScope(Dispatchers.IO)).start()
 
-        booleanPreferenceOne.valueAsFlow.onEach {
-            runOnUiThread {
-                fooCheckBoxOne.isChecked = it
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                s?.let { stringPreferenceOne.set(it.toString()) }
             }
-        }.launchIn(CoroutineScope(Dispatchers.IO)).start()
 
+            override fun afterTextChanged(s: Editable?) {
 
-        stringPreferenceTwo.valueAsFlow.onEach {
-            runOnUiThread {
-                barEditTextOne.removeTextChangedListener(barEditTextOneTextChangeListener)
-                barEditTextTwo.removeTextChangedListener(barEditTextTwoTextChangeListener)
-                barEditTextTwo.setText(it)
-                barEditTextOne.addTextChangedListener(barEditTextOneTextChangeListener)
-                barEditTextTwo.addTextChangedListener(barEditTextTwoTextChangeListener)
             }
-        }.launchIn(CoroutineScope(Dispatchers.IO)).start()
+        })
 
-        stringPreferenceOne.valueAsFlow.onEach {
-            runOnUiThread {
-                barEditTextOne.removeTextChangedListener(barEditTextOneTextChangeListener)
-                barEditTextTwo.removeTextChangedListener(barEditTextTwoTextChangeListener)
-                barEditTextOne.setText(it)
-                barEditTextOne.addTextChangedListener(barEditTextOneTextChangeListener)
-                barEditTextTwo.addTextChangedListener(barEditTextTwoTextChangeListener)
+        barEditTextTwo.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
             }
-        }.launchIn(CoroutineScope(Dispatchers.IO)).start()
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                s?.let { stringPreferenceOne.set(it.toString()) }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
     }
 
-    val barEditTextTwoTextChangeListener = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+    override fun onResume() {
+        super.onResume()
+        jobs += createCheckboxJob(fooCheckBoxOne).apply { start() }
+        jobs += createCheckboxJob(fooCheckBoxTwo).apply { start() }
 
-        }
+        jobs += createEditTextJob(barEditTextOne).apply { start() }
+        jobs += createEditTextJob(barEditTextTwo).apply { start() }
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            s?.let { stringPreferenceOne.set(it.toString()) }
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-
-        }
     }
 
-    val barEditTextOneTextChangeListener = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+    private fun createCheckboxJob(checkbox: CheckBox) =
+        booleanPreferenceOne
+            .valueAsFlow
+            .drop(1)
+            .filter { !checkbox.isFocused }
+            .onEach(checkbox::setChecked)
+            .launchIn(CoroutineScope(Dispatchers.Main))
 
-        }
+    private fun createEditTextJob(editText: EditText) =
+        stringPreferenceOne
+            .valueAsFlow
+            .drop(1)
+            .filter { !editText.isFocused }
+            .debounce(500)
+            .onEach(editText::setText)
+            .launchIn(CoroutineScope(Dispatchers.Main))
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            s?.let { stringPreferenceTwo.set(it.toString()) }
-        }
-
-        override fun afterTextChanged(s: Editable?) {
-
-        }
-
+    override fun onPause() {
+        super.onPause()
+        jobs.forEach { it.cancel() }
+        jobs.clear()
     }
 }
