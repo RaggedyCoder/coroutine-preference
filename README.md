@@ -11,7 +11,7 @@ Download [the latest AAR][1] or grab via Maven:
 <dependency>
   <groupId>io.github.raggedycoder.preference</groupId>
   <artifactId>preference-coroutine</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
 </dependency>
 ```
 or Gradle:
