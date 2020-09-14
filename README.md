@@ -16,7 +16,7 @@ Download [the latest AAR][1] or grab via Maven:
 ```
 or Gradle:
 ```groovy
-implementation 'io.github.raggedycoder.preference:preference-coroutine:0.1.0'
+implementation 'io.github.raggedycoder.preference:preference-coroutine:0.2.0'
 ```
 
 Snapshots of the development version are available in [Sonatype's `snapshots` repository][snap].
@@ -39,5 +39,5 @@ License
     limitations under the License.
 
 
- [1]: https://repo1.maven.org/maven2/io/github/raggedycoder/preference/preference-coroutine/0.1.0/preference-coroutine-0.1.0.aar
+ [1]: https://repo1.maven.org/maven2/io/github/raggedycoder/preference/preference-coroutine/0.2.0/preference-coroutine-0.2.0.aar
  [snap]: https://oss.sonatype.org/content/repositories/snapshots/
