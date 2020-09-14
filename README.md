@@ -1,7 +1,7 @@
 Coroutine Flowable Shared Preference
 ====================================
 
-This library uses the flow from kotlin for suppling a reactive stream for the shared preference.
+This library uses the flow from kotlin for supplying a reactive stream for the shared preference.
 
 Download
 --------
