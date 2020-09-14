@@ -31,10 +31,10 @@ internal constructor(
         val changeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key: String ->
             offer(key)
         }
+        sharedPreferences.registerOnSharedPreferenceChangeListener(changeListener)
         awaitClose {
             sharedPreferences.unregisterOnSharedPreferenceChangeListener(changeListener)
         }
-        sharedPreferences.registerOnSharedPreferenceChangeListener(changeListener)
     }
 
     override fun getBoolean(
