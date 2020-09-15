@@ -20,6 +20,7 @@ import io.github.raggedycoder.coroutine.preference.Preference.Adapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.isActive
 import java.lang.reflect.Type
 
 @ExperimentalCoroutinesApi
@@ -29,7 +30,7 @@ internal constructor(
 ) : CoroutineSharedPreferences {
     private val keyChanges = callbackFlow {
         val changeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key: String ->
-            offer(key)
+            if (isActive) offer(key)
         }
         sharedPreferences.registerOnSharedPreferenceChangeListener(changeListener)
         awaitClose {
