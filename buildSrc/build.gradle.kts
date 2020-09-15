@@ -1,4 +1,4 @@
-val kotlinVersion = "1.4.0"
+val kotlinVersion = "1.4.10"
 
 plugins {
     `java-gradle-plugin`
@@ -6,7 +6,7 @@ plugins {
 }
 
 buildscript {
-    val kotlinVersion = "1.4.0"
+    val kotlinVersion = "1.4.10"
 
     repositories {
         jcenter()
@@ -24,7 +24,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
 }
 
