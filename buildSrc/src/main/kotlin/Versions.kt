@@ -14,7 +14,7 @@ object Versions {
     // Test library versions
     val androidXTest = "1.3.0"
     val junit4 = "4.13"
-    val junit5 = "5.6.2"
+    val junit5 = "5.7.0"
     val mockito = "3.5.7"
     val mockitoKotlin = "2.2.0"
     val roboelectric = "4.4"
