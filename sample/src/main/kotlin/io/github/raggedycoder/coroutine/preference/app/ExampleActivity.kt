@@ -1,18 +1,16 @@
 package io.github.raggedycoder.coroutine.preference.app
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import io.github.raggedycoder.coroutine.preference.CoroutineSharedPreferences
 import kotlinx.android.synthetic.main.activity_example.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 class ExampleActivity : AppCompatActivity() {
 
     private val sharedPreferences by lazy {
@@ -41,70 +39,47 @@ class ExampleActivity : AppCompatActivity() {
         fooCheckBoxOne.isChecked = booleanPreferenceOne.value
         fooCheckBoxTwo.isChecked = booleanPreferenceOne.value
 
-        fooCheckBoxOne.setOnCheckedChangeListener { _, isChecked ->
-            booleanPreferenceOne.set(isChecked)
-        }
-
-        fooCheckBoxTwo.setOnCheckedChangeListener { _, isChecked ->
-            booleanPreferenceOne.set(isChecked)
-        }
-
         barEditTextOne.setText(stringPreferenceOne.value)
         barEditTextTwo.setText(stringPreferenceOne.value)
-
-        barEditTextOne.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                s?.let { stringPreferenceOne.set(it.toString()) }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-
-        barEditTextTwo.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                s?.let { stringPreferenceOne.set(it.toString()) }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
     }
 
     override fun onResume() {
         super.onResume()
+        jobs += createChecboboxConsumerJob(fooCheckBoxOne).apply { start() }
         jobs += createCheckboxJob(fooCheckBoxOne).apply { start() }
+        jobs += createChecboboxConsumerJob(fooCheckBoxTwo).apply { start() }
         jobs += createCheckboxJob(fooCheckBoxTwo).apply { start() }
 
+        jobs += createEditTextConsumerJob(barEditTextOne).apply { start() }
         jobs += createEditTextJob(barEditTextOne).apply { start() }
+        jobs += createEditTextConsumerJob(barEditTextTwo).apply { start() }
         jobs += createEditTextJob(barEditTextTwo).apply { start() }
 
     }
 
+    private fun createChecboboxConsumerJob(checkbox: CheckBox) =
+        checkbox.checkedChanges()
+            .onEach(booleanPreferenceOne::set)
+            .launchIn(CoroutineScope(Dispatchers.IO))
+
     private fun createCheckboxJob(checkbox: CheckBox) =
         booleanPreferenceOne
             .valueAsFlow
-            .drop(1)
             .filter { !checkbox.isFocused }
             .onEach(checkbox::setChecked)
             .launchIn(CoroutineScope(Dispatchers.Main))
 
+    private fun createEditTextConsumerJob(editText: EditText) =
+        editText.textChanges()
+            .debounce(500)
+            .map { it.toString() }
+            .onEach(stringPreferenceOne::set)
+            .launchIn(CoroutineScope(Dispatchers.IO))
+
     private fun createEditTextJob(editText: EditText) =
         stringPreferenceOne
             .valueAsFlow
-            .drop(1)
             .filter { !editText.isFocused }
-            .debounce(500)
             .onEach(editText::setText)
             .launchIn(CoroutineScope(Dispatchers.Main))
 
