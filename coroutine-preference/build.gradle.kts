@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import org.jetbrains.dokka.gradle.DokkaTask
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
@@ -52,8 +54,17 @@ android {
         }
     }
 }
+
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<DokkaTask>().configureEach {
+    dokkaSourceSets {
+        named("main") {
+            noAndroidSdkLink.set(false)
+        }
+    }
 }
 
 afterEvaluate {

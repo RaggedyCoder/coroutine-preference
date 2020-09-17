@@ -5,6 +5,7 @@ plugins {
     id("org.gradle.kotlin.kotlin-dsl") version "1.3.6"
 }
 
+
 buildscript {
     val kotlinVersion = "1.4.10"
 
@@ -31,10 +32,14 @@ gradlePlugin {
     repositories {
         google()
         jcenter()
+        gradlePluginPortal()
         maven { url = uri("https://jitpack.io") }
     }
     dependencies {
         implementation("com.android.tools.build:gradle:4.0.1")
+        implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.4.0")
+        implementation("com.gradle.publish:plugin-publish-plugin:0.12.0")
         implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }
 }
