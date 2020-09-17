@@ -20,7 +20,7 @@ import io.github.raggedycoder.coroutine.preference.Preference.Adapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-class DefaultEnumAdapter<T : Enum<T>>(
+internal class DefaultEnumAdapter<T : Enum<T>>(
     private val enumClass: Class<T>,
     private val defaultValue: T
 ) : Adapter<T> {

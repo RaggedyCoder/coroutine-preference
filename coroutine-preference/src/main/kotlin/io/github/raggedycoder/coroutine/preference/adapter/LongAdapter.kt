@@ -21,7 +21,7 @@ import io.github.raggedycoder.coroutine.preference.Preference.Adapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-object LongAdapter : Adapter<Long> {
+internal object LongAdapter : Adapter<Long> {
     override fun get(key: String, preferences: SharedPreferences) =
         preferences.getLong(key, DEFAULT_LONG)
 

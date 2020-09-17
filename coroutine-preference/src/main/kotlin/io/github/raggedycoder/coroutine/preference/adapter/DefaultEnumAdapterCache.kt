@@ -20,7 +20,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.concurrent.ConcurrentHashMap
 
 @ExperimentalCoroutinesApi
-object DefaultEnumAdapterCache {
+internal object DefaultEnumAdapterCache {
 
     private val adapterMap: MutableMap<Class<out Enum<*>>, Adapter<out Enum<*>>> =
         ConcurrentHashMap()

@@ -21,7 +21,7 @@ import io.github.raggedycoder.coroutine.preference.Preference.Adapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-object BooleanAdapter : Adapter<Boolean> {
+internal object BooleanAdapter : Adapter<Boolean> {
     override fun get(key: String, preferences: SharedPreferences) =
         preferences.getBoolean(key, DEFAULT_BOOLEAN)
 

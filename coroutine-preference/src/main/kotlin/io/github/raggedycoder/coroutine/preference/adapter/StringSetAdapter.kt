@@ -21,7 +21,7 @@ import io.github.raggedycoder.coroutine.preference.Preference.Adapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-object StringSetAdapter : Adapter<Set<String>> {
+internal object StringSetAdapter : Adapter<Set<String>> {
     override fun get(key: String, preferences: SharedPreferences) =
         preferences.getStringSet(key, DEFAULT_STRING_SET) ?: DEFAULT_STRING_SET
 

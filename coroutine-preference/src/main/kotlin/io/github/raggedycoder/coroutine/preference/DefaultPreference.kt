@@ -21,8 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 
 @ExperimentalCoroutinesApi
-class DefaultPreference<T>
-internal constructor(
+internal class DefaultPreference<T>(
     private val preferences: SharedPreferences,
     override val key: String,
     override val defaultValue: T,

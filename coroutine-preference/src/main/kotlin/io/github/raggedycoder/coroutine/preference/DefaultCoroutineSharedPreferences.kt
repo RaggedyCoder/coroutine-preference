@@ -24,8 +24,7 @@ import kotlinx.coroutines.isActive
 import java.lang.reflect.Type
 
 @ExperimentalCoroutinesApi
-class DefaultCoroutineSharedPreferences
-internal constructor(
+internal class DefaultCoroutineSharedPreferences(
     private val sharedPreferences: SharedPreferences
 ) : CoroutineSharedPreferences {
     private val keyChanges = callbackFlow {

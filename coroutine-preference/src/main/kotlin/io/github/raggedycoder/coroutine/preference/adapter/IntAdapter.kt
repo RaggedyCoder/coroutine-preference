@@ -21,7 +21,7 @@ import io.github.raggedycoder.coroutine.preference.Preference.Adapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-object IntAdapter : Adapter<Int> {
+internal object IntAdapter : Adapter<Int> {
     override fun get(key: String, preferences: SharedPreferences) =
         preferences.getInt(key, DEFAULT_INT)
 

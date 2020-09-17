@@ -21,7 +21,7 @@ import java.lang.reflect.Type
 import java.util.concurrent.ConcurrentHashMap
 
 @ExperimentalCoroutinesApi
-object DefaultObjectAdapterCache {
+internal object DefaultObjectAdapterCache {
 
     private val adapterMap: MutableMap<Type, Adapter<*>> = ConcurrentHashMap()
 

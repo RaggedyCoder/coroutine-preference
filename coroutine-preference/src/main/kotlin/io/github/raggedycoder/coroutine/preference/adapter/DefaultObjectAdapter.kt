@@ -23,7 +23,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.lang.reflect.Type
 
 @ExperimentalCoroutinesApi
-class DefaultObjectAdapter<T>(
+internal class DefaultObjectAdapter<T>(
     private val type: Type,
     private val defaultValue: T,
     private val gson: Gson = gsonConverter
