@@ -18,6 +18,9 @@ import org.jetbrains.dokka.gradle.DokkaTask
 
 class MavenPublishableAndroidLibraryPlugin : Plugin<Project> {
     override fun apply(target: Project) = target.run {
+        val publicationName =
+            projectProperties["POM_ARTIFACT_ID"] as? String ?: project.name
+
         plugins.apply("org.jetbrains.dokka")
         plugins.apply("maven-publish")
         plugins.apply("signing")
@@ -41,24 +44,22 @@ class MavenPublishableAndroidLibraryPlugin : Plugin<Project> {
 
         publishing {
             publications {
-                val publicationName =
-                    projectProperties["POM_ARTIFACT_ID"] as? String ?: project.name
 
                 create(publicationName, MavenPublication::class.java) {
 
                     from(components["release"])
 
-                    artifacts {
-                        add("archives", sourcesJar)
-                        add("archives", dokkaJavadocJar)
-                        add("archives", dokkaHtmlJar)
-                    }
+                    artifact(sourcesJar)
+                    artifact(dokkaJavadocJar)
+                    artifact(dokkaHtmlJar)
 
                     pom {
+                        packaging = projectProperties["POM_PACKAGING"] as? String
                         groupId = projectProperties["GROUP"] as? String
                         artifactId = projectProperties["POM_ARTIFACT_ID"] as? String
                         version = projectProperties["VERSION_NAME"] as? String
 
+                        name.set(projectProperties["POM_NAME"] as? String)
                         description.set(projectProperties["POM_DESCRIPTION"] as? String)
                         url.set(projectProperties["POM_URL"] as? String)
 
@@ -102,7 +103,7 @@ class MavenPublishableAndroidLibraryPlugin : Plugin<Project> {
         }
         signing {
             isRequired = isReleaseBuild
-            if (isReleaseBuild) sign(publishing.publications.getByName(project.name))
+            if (isReleaseBuild) sign(publishing.publications.getByName(publicationName))
         }
     }
 }
