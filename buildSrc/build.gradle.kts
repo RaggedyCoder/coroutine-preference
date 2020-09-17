@@ -42,4 +42,12 @@ gradlePlugin {
         implementation("com.gradle.publish:plugin-publish-plugin:0.12.0")
         implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }
+
+    plugins {
+        create("publishable-library") {
+            id = "publishable-library"
+            implementationClass =
+                "io.github.raggedycoder.preference.plugin.MavenPublishableAndroidLibraryPlugin"
+        }
+    }
 }

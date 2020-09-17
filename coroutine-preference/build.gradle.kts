@@ -116,4 +116,6 @@ tasks {
     }
 }
 
-apply(rootProject.file("gradle/gradle-mvn-push.gradle"))
+afterEvaluate {
+    apply(plugin = "publishable-library")
+}
