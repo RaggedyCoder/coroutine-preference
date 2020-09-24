@@ -19,7 +19,6 @@ jdk:
   - oraclejdk8
 
 after_success:
-  - .buildscript/run_unit_test.sh
   - .buildscript/deploy_snapshot.sh
 
 branches:
